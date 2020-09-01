@@ -34,8 +34,8 @@ public class GuiPonto extends javax.swing.JFrame {
         TxtX = new javax.swing.JTextField();
         TxtY = new javax.swing.JTextField();
         BtnLocalizacao = new javax.swing.JButton();
-        TxtLocalizacao = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        TxtLocalizacao = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ponto");
