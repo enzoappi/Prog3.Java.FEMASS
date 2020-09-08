@@ -23,6 +23,24 @@ public class Retangulo {
         this.r1 = new Reta(x1, y1, x2, y2);
         this.r2 = new Reta(x3, y3, x4, y4);
     }
+    
+    public Retangulo(Ponto pto1, Ponto pto2, Ponto pto3) {
+        if(!(pto2.getX().equals(pto1.getX()))) {
+            throw new IllegalArgumentException("Os pontos 1 e 2 tem que ter o mesmo valor em X!");
+        }
+        if(!(pto2.getY().equals(pto3.getY()))) {
+            throw new IllegalArgumentException("Os pontos 2 e 3 tem que ter o mesmo valor em Y!");
+        }
+        if(pto2.getX()>=pto3.getX()) {
+            throw new IllegalArgumentException("O ponto 3 tem ter o valor em X, maior que o ponto 2!");
+        }
+        if(pto2.getY()>=(pto1.getY())) {
+            throw new IllegalArgumentException("O ponto 1 tem ter o valor em X, maior que o ponto 2!");
+        }
+        
+        this.r1 = new Reta(pto2, pto3);
+        this.r2 = new Reta(pto1, pto2);
+    }
 
     public Reta getR1() {
         return r1;
