@@ -57,6 +57,10 @@ public class Pessoa {
 //COMEÇO do metodo importado do DevMedia
 
     public Boolean isCPF(String CPF) {
+        
+            CPF = CPF.replace(".", "");
+            CPF = CPF.replace("-", "");
+            //System.out.println(CPF);
             // considera-se erro CPF's formados por uma sequencia de numeros iguais
             if (CPF.equals("00000000000") ||
                 CPF.equals("11111111111") ||
