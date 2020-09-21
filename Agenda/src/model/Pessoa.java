@@ -6,6 +6,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.InputMismatchException;
 
 /**
@@ -17,6 +18,7 @@ public class Pessoa {
     private String nome;
     private String cpf;
     private LocalDate dataNascimento;
+    private Endereco endereco;
 
     public Pessoa(String nome, String cpf) {
         this.nome = nome;
@@ -53,7 +55,23 @@ public class Pessoa {
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+    
+    public Long getIdade() {
+        LocalDate hoje = LocalDate.now();
+        
+        Long anos = ChronoUnit.YEARS.between(dataNascimento, hoje);
+        
+        return anos;
+    }
 
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+    
 //COMEÇO do metodo importado do DevMedia
 
     public Boolean isCPF(String CPF) {
@@ -117,5 +135,10 @@ public class Pessoa {
             }   
     
 //FIM do metodo importado do DevMedia
+    
+    @Override
+    public String toString() {
+        return this.nome;
+    }
     
 }
