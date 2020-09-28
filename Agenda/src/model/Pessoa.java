@@ -7,7 +7,9 @@ package model;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 
 /**
  *
@@ -19,13 +21,16 @@ public class Pessoa {
     private String cpf;
     private LocalDate dataNascimento;
     private Endereco endereco;
+    
+    private List<Email> emails = new ArrayList();
+    private List<Telefone> telefones = new ArrayList();
 
     public Pessoa(String nome, String cpf) {
         this.nome = nome;
         
-        if(!(isCPF(cpf))) {
-            throw new IllegalArgumentException("CPF inválido!");
-        }
+//        if(!(isCPF(cpf))) {
+//            throw new IllegalArgumentException("CPF inválido!");
+//        }
         this.cpf = cpf;
     }
 
@@ -70,6 +75,30 @@ public class Pessoa {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+    
+    public void adicionarEmail(Email email) {
+        this.emails.add(email);
+    }
+    
+    public void removerEmail(Email email) {
+        this.emails.remove(email);
+    }
+    
+    public List<Email> getEmails() {
+        return this.emails;
+    }
+    
+        public void adicionarTelefone(Telefone telefone) {
+        this.telefones.add(telefone);
+    }
+    
+    public void removerTelefone(Telefone telefone) {
+        this.telefones.remove(telefone);
+    }
+    
+    public List<Telefone> getTelefones() {
+        return this.telefones;
     }
     
 //COMEÇO do metodo importado do DevMedia

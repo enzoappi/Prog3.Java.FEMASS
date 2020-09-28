@@ -8,6 +8,7 @@ package gui;
 import dao.PessoaDao;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 import model.Endereco;
 import model.Pessoa;
 import model.TipoLogradouro;
@@ -18,7 +19,7 @@ import model.Uf;
  * @author enzoappi
  */
 public class GuiPessoa extends javax.swing.JFrame {
-
+    private DateTimeFormatter form = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     /**
      * Creates new form GuiPessoa
      */
@@ -73,9 +74,17 @@ public class GuiPessoa extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         TxtCep = new javax.swing.JFormattedTextField();
         BtnGravar = new javax.swing.JButton();
+        BtnEmails = new javax.swing.JButton();
+        BtnTelefones = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
+        setTitle("Pessoas");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -87,8 +96,6 @@ public class GuiPessoa extends javax.swing.JFrame {
         jScrollPane1.setViewportView(LstPessoas);
 
         jPanel1.add(jScrollPane1);
-
-        getContentPane().add(jPanel1);
 
         jLabel1.setText("Nome:");
 
@@ -146,10 +153,27 @@ public class GuiPessoa extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        BtnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar-arquivo.png"))); // NOI18N
         BtnGravar.setText("Gravar");
         BtnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnGravarActionPerformed(evt);
+            }
+        });
+
+        BtnEmails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/message.png"))); // NOI18N
+        BtnEmails.setText("Emails");
+        BtnEmails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEmailsActionPerformed(evt);
+            }
+        });
+
+        BtnTelefones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/telephone.png"))); // NOI18N
+        BtnTelefones.setText("Telefones");
+        BtnTelefones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnTelefonesActionPerformed(evt);
             }
         });
 
@@ -164,10 +188,6 @@ public class GuiPessoa extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TxtComplemento))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(54, 54, 54)
-                        .addComponent(TxtCidade))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -184,31 +204,42 @@ public class GuiPessoa extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TxtNumero)
                             .addComponent(TxtLogradouro)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(CboTipoLogradouro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                            .addComponent(CboUf, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(165, 165, 165))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel1))
-                            .addGap(31, 31, 31)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8))
+                        .addGap(54, 54, 54)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(CboUf, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(TxtCidade)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(TxtNome, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(TxtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                                .addComponent(TxtDataNascimento, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(CboTipoLogradouro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel1))
+                                    .addGap(31, 31, 31)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(TxtNome, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(TxtCpf)
+                                        .addComponent(TxtDataNascimento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(BtnEmails)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BtnTelefones)))
+                        .addGap(0, 136, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(BtnGravar)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(BtnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,10 +290,27 @@ public class GuiPessoa extends javax.swing.JFrame {
                     .addComponent(TxtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(BtnGravar)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BtnEmails)
+                    .addComponent(BtnTelefones))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -278,10 +326,15 @@ public class GuiPessoa extends javax.swing.JFrame {
     private void BtnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGravarActionPerformed
         // TODO add your handling code here:
         Endereco endereco = new Endereco((TipoLogradouro)CboTipoLogradouro.getSelectedItem(), TxtLogradouro.getText(), TxtNumero.getText(), TxtBairro.getText(), TxtCidade.getText(), (Uf)CboUf.getSelectedItem(), TxtCep.getText());
-        
-        Pessoa pessoa = new Pessoa(TxtNome.getText(), TxtCpf.getText());
+        endereco.setComplemento(TxtComplemento.getText());
+        Pessoa pessoa = null;
+        try{
+            pessoa = new Pessoa(TxtNome.getText(), TxtCpf.getText());
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
         DateTimeFormatter form = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate nasc = LocalDate.parse(TxtDataNascimento.getText(), form);
+        LocalDate nasc = LocalDate.parse(TxtDataNascimento.getText(), this.form);
         pessoa.setDataNascimento(nasc);
         
         pessoa.setEndereco(endereco);
@@ -289,6 +342,20 @@ public class GuiPessoa extends javax.swing.JFrame {
         new PessoaDao().gravar(pessoa);
         
         LstPessoas.setListData(new PessoaDao().getPessoas().toArray());
+        
+        //para limpar a tela apos cada gravacao
+        TxtCep.setText("");
+        TxtCidade.setText("");
+        TxtComplemento.setText("");
+        TxtCpf.setText("");
+        TxtDataNascimento.setText("");
+        TxtLogradouro.setText("");
+        TxtNome.setText("");
+        TxtNumero.setText("");
+        TxtBairro.setText("");
+        CboUf.setSelectedItem(Uf.RJ);
+        CboTipoLogradouro.setSelectedItem(TipoLogradouro.rua);
+        TxtNome.requestFocus();
         
     }//GEN-LAST:event_BtnGravarActionPerformed
 
@@ -313,7 +380,30 @@ public class GuiPessoa extends javax.swing.JFrame {
         CboUf.setSelectedItem(pessoa.getEndereco().getUf());
         TxtCep.setText(pessoa.getEndereco().getCep());
         
+        TxtDataNascimento.setText(pessoa.getDataNascimento().format(this.form));
+                
+        
+        LocalDate nasc = LocalDate.parse(TxtDataNascimento.getText(), form);
+        
     }//GEN-LAST:event_LstPessoasValueChanged
+
+    private void BtnEmailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEmailsActionPerformed
+        // TODO add your handling code here:
+        Pessoa pessoa = (Pessoa) LstPessoas.getSelectedValue();
+        new GuiEmail(null, true, pessoa).setVisible(true);
+    }//GEN-LAST:event_BtnEmailsActionPerformed
+
+    private void BtnTelefonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTelefonesActionPerformed
+        // TODO add your handling code here:
+        Pessoa pessoa = (Pessoa) LstPessoas.getSelectedValue();
+        new GuiTelefone(null, true, pessoa).setVisible(true);
+    }//GEN-LAST:event_BtnTelefonesActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        //Colocado para que o arquivo xml seja encontrado no diretorio, ao subir a tela
+        LstPessoas.setListData(new PessoaDao().getPessoas().toArray());
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -351,7 +441,9 @@ public class GuiPessoa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnEmails;
     private javax.swing.JButton BtnGravar;
+    private javax.swing.JButton BtnTelefones;
     private javax.swing.JComboBox<model.TipoLogradouro> CboTipoLogradouro;
     private javax.swing.JComboBox<model.Uf> CboUf;
     private javax.swing.JList LstPessoas;

@@ -1,0 +1,34 @@
+<list>
+  <model.Pessoa>
+    <nome>Enzo</nome>
+    <cpf>112.466.877-20</cpf>
+    <dataNascimento>1986-04-25</dataNascimento>
+    <endereco>
+      <tipoLogradouro>avenida</tipoLogradouro>
+      <logradouro>Avenida K</logradouro>
+      <numero>666</numero>
+      <complemento>2111</complemento>
+      <bairro>Centro</bairro>
+      <cidade>Macaé</cidade>
+      <uf>RJ</uf>
+      <cep>27.565-987</cep>
+    </endereco>
+    <emails>
+      <model.Email>
+        <endereco>enzoappi.tiriba@gmail.com</endereco>
+        <tipoContato>Pessoal</tipoContato>
+      </model.Email>
+      <model.Email>
+        <endereco>enzoappi.tiriba@petrobras.com.br</endereco>
+        <tipoContato>Trabalho</tipoContato>
+      </model.Email>
+    </emails>
+    <telefones>
+      <model.Telefone>
+        <ddd>22</ddd>
+        <numero>981444897</numero>
+        <tipoContato>Pessoal</tipoContato>
+      </model.Telefone>
+    </telefones>
+  </model.Pessoa>
+</list>
