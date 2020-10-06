@@ -13,45 +13,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import model.Pessoa;
+import model.Leitor;
+
 /**
  *
  * @author enzoappi
  */
-public class PessoaDao {
-    private static List<Pessoa> pessoas = new ArrayList<>();
+public class LeitorDao {
+    private static List<Leitor> leitores = new ArrayList<>();
     
-    public void gravar(Pessoa pessoa) {
-        pessoas.add(pessoa);
+    public void gravar(Leitor leitor) {
+        this.leitores.add(leitor);
         salvar();
     }
     
     public void salvar() {
         XStream xs = new XStream();
-        String xml = xs.toXML(pessoas);
+        String xml = xs.toXML(this.leitores);
         
         try {
-            FileWriter fw = new FileWriter("pessoas.xml");
+            FileWriter fw = new FileWriter("leitores.xml");
             fw.write(xml);
             fw.close();
         } catch (IOException ex) {
-            Logger.getLogger(PessoaDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LeitorDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void excluir(Pessoa pessoa) {
-        pessoas.remove(pessoa);
+    public void excluir(Leitor leitor) {
+        this.leitores.remove(leitor);
     }
     
-    public List<Pessoa> getPessoas() {
-        try {
+    public List<Leitor> getLeitores() {
+        try{
             XStream xs = new XStream();
-            pessoas = (List<Pessoa>) xs.fromXML(new File("pessoas.xml"));
+            this.leitores = (List<Leitor>) xs.fromXML(new File("leitores.xml"));
         }catch(Exception e) {
             salvar();
-            getPessoas();
+            getLeitores();
         }
-        return pessoas;
+        return this.leitores;
     }
 }

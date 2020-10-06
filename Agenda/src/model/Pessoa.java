@@ -89,7 +89,7 @@ public class Pessoa {
         return this.emails;
     }
     
-        public void adicionarTelefone(Telefone telefone) {
+    public void adicionarTelefone(Telefone telefone) {
         this.telefones.add(telefone);
     }
     

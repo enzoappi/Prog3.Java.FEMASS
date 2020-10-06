@@ -13,45 +13,47 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import model.Pessoa;
+import model.Livro;
+
 /**
  *
  * @author enzoappi
  */
-public class PessoaDao {
-    private static List<Pessoa> pessoas = new ArrayList<>();
+public class LivroDao {
+    private static List<Livro> livros = new ArrayList<>();
     
-    public void gravar(Pessoa pessoa) {
-        pessoas.add(pessoa);
+    public void gravar(Livro livro) {
+        this.livros.add(livro);
         salvar();
     }
     
     public void salvar() {
         XStream xs = new XStream();
-        String xml = xs.toXML(pessoas);
+        String xml = xs.toXML(livros);
+        
         
         try {
-            FileWriter fw = new FileWriter("pessoas.xml");
+            FileWriter fw = new FileWriter("livros.xml");
             fw.write(xml);
             fw.close();
         } catch (IOException ex) {
-            Logger.getLogger(PessoaDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LivroDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void excluir(Pessoa pessoa) {
-        pessoas.remove(pessoa);
+
+    public void excluir(Livro livro) {
+        this.livros.remove(livro);
     }
     
-    public List<Pessoa> getPessoas() {
-        try {
+    public List<Livro> getLivros() {
+        try{
             XStream xs = new XStream();
-            pessoas = (List<Pessoa>) xs.fromXML(new File("pessoas.xml"));
-        }catch(Exception e) {
+            this.livros = (List<Livro>) xs.fromXML(new File("livros.xml"));
+            return this.livros;
+        } catch(Exception e) {
             salvar();
-            getPessoas();
+            getLivros();
         }
-        return pessoas;
+        return this.livros;
     }
 }

@@ -13,45 +13,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import model.Pessoa;
+import model.Autor;
+
 /**
  *
  * @author enzoappi
  */
-public class PessoaDao {
-    private static List<Pessoa> pessoas = new ArrayList<>();
+public class AutorDao {
+    private static List<Autor> autores = new ArrayList<>();
     
-    public void gravar(Pessoa pessoa) {
-        pessoas.add(pessoa);
+    public void gravar(Autor autor) {
+        autores.add(autor);
         salvar();
     }
     
     public void salvar() {
         XStream xs = new XStream();
-        String xml = xs.toXML(pessoas);
+        String xml = xs.toXML(this.autores);
+        
         
         try {
-            FileWriter fw = new FileWriter("pessoas.xml");
+            FileWriter fw = new FileWriter("autores.xml");
             fw.write(xml);
             fw.close();
         } catch (IOException ex) {
-            Logger.getLogger(PessoaDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AutorDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void excluir(Pessoa pessoa) {
-        pessoas.remove(pessoa);
+
+    public void excluir(Autor autor) {
+        this.autores.remove(autor);
     }
     
-    public List<Pessoa> getPessoas() {
-        try {
+    public List<Autor> getAutores() {
+        try{
             XStream xs = new XStream();
-            pessoas = (List<Pessoa>) xs.fromXML(new File("pessoas.xml"));
+            this.autores = (List<Autor>) xs.fromXML(new File("autores.xml"));
         }catch(Exception e) {
             salvar();
-            getPessoas();
+            getAutores();
         }
-        return pessoas;
+        return this.autores;
     }
 }
