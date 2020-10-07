@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.InputMismatchException;
+
 /**
  *
  * @author enzoappi
@@ -47,5 +49,11 @@ public class Autor {
     @Override
     public String toString() {
         return this.nomeAutor;
+    }
+    
+    public void testarCampos() {
+        if(this.codigoAutor.isEmpty() || this.nacionalidadeAutor.isEmpty() || this.nomeAutor.isEmpty()) {
+            throw new InputMismatchException("Você precisa preencher todos os campos antes de gravar!");
+        }
     }
 }

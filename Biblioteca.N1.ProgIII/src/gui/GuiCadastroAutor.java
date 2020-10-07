@@ -6,6 +6,7 @@
 package gui;
 
 import dao.AutorDao;
+import java.util.InputMismatchException;
 import javax.swing.JOptionPane;
 import model.Autor;
 
@@ -42,6 +43,7 @@ public class GuiCadastroAutor extends javax.swing.JFrame {
         txtNacAutor = new javax.swing.JTextField();
         btnGravarAutor = new javax.swing.JButton();
         btnVoltarMenuPrinc = new javax.swing.JButton();
+        btnLimparTela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CADASTRO DE AUTOR NO SISTEMA");
@@ -88,6 +90,14 @@ public class GuiCadastroAutor extends javax.swing.JFrame {
             }
         });
 
+        btnLimparTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/excluir_24px.png"))); // NOI18N
+        btnLimparTela.setText("Limpar Tela");
+        btnLimparTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparTelaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -101,15 +111,20 @@ public class GuiCadastroAutor extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNomeAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNacAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCodAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNomeAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNacAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(btnLimparTela))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(247, 247, 247)
                         .addComponent(btnGravarAutor)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +144,9 @@ public class GuiCadastroAutor extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(btnGravarAutor)
                 .addGap(26, 26, 26)
-                .addComponent(btnVoltarMenuPrinc)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVoltarMenuPrinc)
+                    .addComponent(btnLimparTela))
                 .addContainerGap())
         );
 
@@ -155,11 +172,12 @@ public class GuiCadastroAutor extends javax.swing.JFrame {
     private void btnGravarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarAutorActionPerformed
         // TODO add your handling code here:
         Autor autor = new Autor(txtCodAutor.getText(), txtNomeAutor.getText(), txtNacAutor.getText());
-        if(autor.getCodigoAutor().isEmpty() || autor.getNomeAutor().isEmpty() || autor.getNacionalidadeAutor().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Você deve preencher todos os campos antes de gravar");
-            return;
+        try {
+            autor.testarCampos();
+            new AutorDao().gravar(autor);
+        }catch(InputMismatchException ime) {
+            JOptionPane.showMessageDialog(null, ime.getMessage());
         }
-        new AutorDao().gravar(autor);
         lstAutores.setListData(new AutorDao().getAutores().toArray());
         txtCodAutor.setText("");
         txtNomeAutor.setText("");
@@ -171,6 +189,14 @@ public class GuiCadastroAutor extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnVoltarMenuPrincActionPerformed
+
+    private void btnLimparTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTelaActionPerformed
+        // TODO add your handling code here:
+        txtCodAutor.setText("");
+        txtNomeAutor.setText("");
+        txtNacAutor.setText("");
+        txtNomeAutor.requestFocus();
+    }//GEN-LAST:event_btnLimparTelaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,6 +234,7 @@ public class GuiCadastroAutor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGravarAutor;
+    private javax.swing.JButton btnLimparTela;
     private javax.swing.JButton btnVoltarMenuPrinc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

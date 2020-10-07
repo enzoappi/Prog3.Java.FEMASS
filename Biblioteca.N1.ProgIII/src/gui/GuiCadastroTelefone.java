@@ -6,6 +6,8 @@
 package gui;
 
 import dao.LeitorDao;
+import java.util.InputMismatchException;
+import javax.swing.JOptionPane;
 import model.Leitor;
 import model.Telefone;
 import model.TipoContato;
@@ -52,6 +54,7 @@ public class GuiCadastroTelefone extends javax.swing.JDialog {
         CboTipo = new javax.swing.JComboBox();
         TxtNumero = new javax.swing.JTextField();
         btnVoltarMenuLeitor = new javax.swing.JButton();
+        btnLimparTela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -92,6 +95,14 @@ public class GuiCadastroTelefone extends javax.swing.JDialog {
             }
         });
 
+        btnLimparTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/excluir_24px.png"))); // NOI18N
+        btnLimparTela.setText("Limpar Tela");
+        btnLimparTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparTelaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -101,8 +112,10 @@ public class GuiCadastroTelefone extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnVoltarMenuLeitor)
-                        .addGap(68, 68, 68)
-                        .addComponent(BtnGravar))
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(BtnGravar)
+                            .addComponent(btnLimparTela)))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -114,7 +127,7 @@ public class GuiCadastroTelefone extends javax.swing.JDialog {
                             .addComponent(TxtDdd, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(TxtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,11 +141,13 @@ public class GuiCadastroTelefone extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(CboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(BtnGravar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnGravar)
-                    .addComponent(btnVoltarMenuLeitor))
-                .addGap(15, 15, 15))
+                    .addComponent(btnVoltarMenuLeitor)
+                    .addComponent(btnLimparTela))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel2);
@@ -143,7 +158,12 @@ public class GuiCadastroTelefone extends javax.swing.JDialog {
     private void BtnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGravarActionPerformed
         // TODO add your handling code here:
         Telefone telefone = new Telefone(TxtDdd.getText(), TxtNumero.getText(), (TipoContato) CboTipo.getSelectedItem());
-        this.leitor.adicionarTelefone(telefone);
+        try {
+            telefone.testarCampos();
+            this.leitor.adicionarTelefone(telefone);
+        }catch(InputMismatchException ime) {
+            JOptionPane.showMessageDialog(null, ime.getMessage());
+        }
         new LeitorDao().salvar(); //faco isso para garantir que o arquivo xml Xstream seja atualizado antes de qualquer operacao
         LstTelefone.setListData(this.leitor.getTelefones().toArray());
         
@@ -169,12 +189,22 @@ public class GuiCadastroTelefone extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnVoltarMenuLeitorActionPerformed
 
+    private void btnLimparTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTelaActionPerformed
+        // TODO add your handling code here:
+        TxtDdd.setText("");
+        TxtNumero.setText("");
+        CboTipo.setSelectedItem(TipoContato.Pessoal);
+        
+        TxtDdd.requestFocus();
+    }//GEN-LAST:event_btnLimparTelaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGravar;
     private javax.swing.JComboBox CboTipo;
     private javax.swing.JList LstTelefone;
     private javax.swing.JTextField TxtDdd;
     private javax.swing.JTextField TxtNumero;
+    private javax.swing.JButton btnLimparTela;
     private javax.swing.JButton btnVoltarMenuLeitor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

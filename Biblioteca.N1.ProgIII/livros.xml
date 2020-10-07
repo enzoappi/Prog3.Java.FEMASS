@@ -1,0 +1,18 @@
+<list>
+  <model.Livro>
+    <codLivro>0101</codLivro>
+    <tituloLivro>1822</tituloLivro>
+    <anoPublicacao>2015</anoPublicacao>
+    <autores/>
+    <exemplaresLivros>
+      <model.ExemplarLivro>
+        <codExemplarLivro>0101</codExemplarLivro>
+        <dataAquisicaoExemplarLivro>  /  /    </dataAquisicaoExemplarLivro>
+      </model.ExemplarLivro>
+      <model.ExemplarLivro>
+        <codExemplarLivro>0202</codExemplarLivro>
+        <dataAquisicaoExemplarLivro>  /  /    </dataAquisicaoExemplarLivro>
+      </model.ExemplarLivro>
+    </exemplaresLivros>
+  </model.Livro>
+</list>

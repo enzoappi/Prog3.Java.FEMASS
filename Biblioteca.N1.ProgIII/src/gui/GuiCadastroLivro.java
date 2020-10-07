@@ -8,6 +8,7 @@ package gui;
 import dao.AutorDao;
 import dao.LivroDao;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Livro;
@@ -51,6 +52,7 @@ public class GuiCadastroLivro extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnVoltarMenuPrincipal = new javax.swing.JButton();
+        btnLimparTela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CADASTRO DE LIVROS");
@@ -137,6 +139,14 @@ public class GuiCadastroLivro extends javax.swing.JFrame {
             }
         });
 
+        btnLimparTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/excluir_24px.png"))); // NOI18N
+        btnLimparTela.setText("Limpar Tela");
+        btnLimparTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparTelaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -166,6 +176,8 @@ public class GuiCadastroLivro extends javax.swing.JFrame {
                         .addGap(25, 25, 25))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnVoltarMenuPrincipal)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimparTela)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -198,7 +210,9 @@ public class GuiCadastroLivro extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnGravarLivro)
                 .addGap(18, 18, 18)
-                .addComponent(btnVoltarMenuPrincipal)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVoltarMenuPrincipal)
+                    .addComponent(btnLimparTela))
                 .addGap(48, 48, 48))
         );
 
@@ -210,29 +224,33 @@ public class GuiCadastroLivro extends javax.swing.JFrame {
     private void btnInserirAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirAutorActionPerformed
         // TODO add your handling code here:
         Livro livro = (Livro) lstLivros.getSelectedValue();
-        try{
-            if(livro == null) {
-                JOptionPane.showMessageDialog(null, "Você deve criar um livro antes de inserir um autor");
-                return;
-            }
-            new GuiSelecaoAutorLivro(null, true, livro).setVisible(true);
-        }catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "É necessário ter autores cadastrados no Sistema, para adiciona-los à algum livro!");
+        if(livro == null) {
+            JOptionPane.showMessageDialog(null, "Você precisa selecionar um livro na lista à esquerda antes de prosseguir!");
+            return;
         }
+        try{
+            new AutorDao().testarArquivoAutores();
+        }catch(InputMismatchException ime) {
+            JOptionPane.showMessageDialog(null, ime.getMessage());
+            return;
+        }
+        new GuiSelecaoAutorLivro(null, true, livro).setVisible(true);
     }//GEN-LAST:event_btnInserirAutorActionPerformed
 
     private void btnGravarLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarLivroActionPerformed
         // TODO add your handling code here:
         Livro livro = new Livro(txtCodLivro.getText(), txtTituloLivro.getText(), txtanoPublicacao.getText());
-        if(livro.getCodLivro().isEmpty() || livro.getTituloLivro().isEmpty() || livro.getAnoPublicacao().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Você deve preencher todos os campos antes de gravar");
-            return;
+        try {
+            livro.testarCampos();
+            new LivroDao().gravar(livro);
+        }catch(InputMismatchException ime) {
+            JOptionPane.showMessageDialog(null, ime.getMessage());
         }
-        new LivroDao().gravar(livro);
         lstLivros.setListData(new LivroDao().getLivros().toArray());
         txtCodLivro.setText("");
         txtTituloLivro.setText("");
         txtanoPublicacao.setText("");
+        txtCodLivro.requestFocus();
     }//GEN-LAST:event_btnGravarLivroActionPerformed
 
     private void lstLivrosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstLivrosValueChanged
@@ -263,6 +281,14 @@ public class GuiCadastroLivro extends javax.swing.JFrame {
         // TODO add your handling code here:
         lstLivros.setListData(new LivroDao().getLivros().toArray());
     }//GEN-LAST:event_formWindowActivated
+
+    private void btnLimparTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTelaActionPerformed
+        // TODO add your handling code here:
+        txtCodLivro.setText("");
+        txtTituloLivro.setText("");
+        txtanoPublicacao.setText("");
+        txtCodLivro.requestFocus();
+    }//GEN-LAST:event_btnLimparTelaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,6 +330,7 @@ public class GuiCadastroLivro extends javax.swing.JFrame {
     private javax.swing.JButton btnGravarLivro;
     private javax.swing.JButton btnInserirAutor;
     private javax.swing.JButton btnInserirExemplar;
+    private javax.swing.JButton btnLimparTela;
     private javax.swing.JButton btnVoltarMenuPrincipal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

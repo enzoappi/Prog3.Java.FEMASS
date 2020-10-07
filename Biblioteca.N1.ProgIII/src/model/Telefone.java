@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.InputMismatchException;
+
 /**
  *
  * @author enzoappi
@@ -53,5 +55,11 @@ public class Telefone {
     @Override
     public String toString() {
         return "(" + this.ddd + ") " + numero;
+    }
+    
+    public void testarCampos() {
+        if(this.ddd.isEmpty() || this.numero.isEmpty()) {
+            throw new InputMismatchException("Você deve preencher todos os campos antes de salvar!");
+        }
     }
 }

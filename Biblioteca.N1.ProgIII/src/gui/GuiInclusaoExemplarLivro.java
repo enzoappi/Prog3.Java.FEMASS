@@ -57,6 +57,7 @@ public class GuiInclusaoExemplarLivro extends javax.swing.JDialog {
         btnAddExemplar = new javax.swing.JButton();
         btnVoltarMenuCadLivro = new javax.swing.JButton();
         txtDataAquisicaoExemplar = new javax.swing.JFormattedTextField();
+        btnLimparTela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CADASTRO DE EXEMPLARES DOS LIVROS");
@@ -113,6 +114,17 @@ public class GuiInclusaoExemplarLivro extends javax.swing.JDialog {
         txtDataAquisicaoExemplar.setMinimumSize(new java.awt.Dimension(15, 23));
         txtDataAquisicaoExemplar.setPreferredSize(new java.awt.Dimension(15, 23));
 
+        btnLimparTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/excluir_24px.png"))); // NOI18N
+        btnLimparTela.setText("Limpar Tela");
+        btnLimparTela.setMaximumSize(new java.awt.Dimension(93, 32));
+        btnLimparTela.setMinimumSize(new java.awt.Dimension(93, 32));
+        btnLimparTela.setPreferredSize(new java.awt.Dimension(93, 32));
+        btnLimparTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparTelaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -122,11 +134,12 @@ public class GuiInclusaoExemplarLivro extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
-                        .addComponent(txtCodExemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCodExemplar))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnVoltarMenuCadLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLimparTela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(lblDataAquisExempl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -150,7 +163,9 @@ public class GuiInclusaoExemplarLivro extends javax.swing.JDialog {
                 .addGap(28, 28, 28)
                 .addComponent(btnAddExemplar)
                 .addGap(27, 27, 27)
-                .addComponent(btnVoltarMenuCadLivro)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVoltarMenuCadLivro)
+                    .addComponent(btnLimparTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -161,17 +176,16 @@ public class GuiInclusaoExemplarLivro extends javax.swing.JDialog {
 
     private void btnAddExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExemplarActionPerformed
         // TODO add your handling code here:
-        try{
-            ExemplarLivro exemplarLivro = exemplarLivro = new ExemplarLivro(txtCodExemplar.getText());
-            LocalDate dataAquisicaoExemplar = LocalDate.parse(txtDataAquisicaoExemplar.getText(), this.form);
-            exemplarLivro.setDataAquisicaoExemplarLivro(dataAquisicaoExemplar);
-            this.livro.adicionarExemplarLivro(exemplarLivro);
+        ExemplarLivro exemplarLivro = new ExemplarLivro(txtCodExemplar.getText(), txtDataAquisicaoExemplar.getText());
+        try {
+            exemplarLivro.testarCampos();
             new LivroDao().salvar();
             lstExemplares.setListData(this.livro.getExemplaresLivros().toArray());
             txtCodExemplar.setText("");
             txtDataAquisicaoExemplar.setText("");
-        }catch(DateTimeException dte) {
-            JOptionPane.showMessageDialog(null, "Você deve inserir um valor válido antes de adicionar o Exemplar");
+        }catch(InputMismatchException ime) {
+              JOptionPane.showMessageDialog(null, ime.getMessage());
+              return;
         }
     }//GEN-LAST:event_btnAddExemplarActionPerformed
 
@@ -180,7 +194,8 @@ public class GuiInclusaoExemplarLivro extends javax.swing.JDialog {
         ExemplarLivro exemplarLivro = (ExemplarLivro) lstExemplares.getSelectedValue();
         if(exemplarLivro == null) return;
         txtCodExemplar.setText(exemplarLivro.getCodExemplarLivro());
-        txtDataAquisicaoExemplar.setText(exemplarLivro.getDataAquisicaoExemplarLivro().format(this.form));
+//        txtDataAquisicaoExemplar.setText(exemplarLivro.getDataAquisicaoExemplarLivro().format(this.form));
+        txtDataAquisicaoExemplar.setText(exemplarLivro.getDataAquisicaoExemplarLivro());
     }//GEN-LAST:event_lstExemplaresValueChanged
 
     private void btnVoltarMenuCadLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuCadLivroActionPerformed
@@ -188,12 +203,19 @@ public class GuiInclusaoExemplarLivro extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnVoltarMenuCadLivroActionPerformed
 
+    private void btnLimparTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTelaActionPerformed
+        // TODO add your handling code here:
+        txtCodExemplar.setText("");
+        txtDataAquisicaoExemplar.setText("");
+    }//GEN-LAST:event_btnLimparTelaActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddExemplar;
+    private javax.swing.JButton btnLimparTela;
     private javax.swing.JButton btnVoltarMenuCadLivro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

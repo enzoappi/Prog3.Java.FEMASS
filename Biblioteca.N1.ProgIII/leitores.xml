@@ -1,0 +1,18 @@
+<list>
+  <model.Professor>
+    <codigoLeitor>010101</codigoLeitor>
+    <nomeLeitor>hjhgbjhgbj</nomeLeitor>
+    <enderecoLeitor>
+      <tipoLogradouro>alameda</tipoLogradouro>
+      <logradouro>hgjg</logradouro>
+      <numero>jhgj</numero>
+      <complemento>jhgj</complemento>
+      <bairro>jhg</bairro>
+      <cidade>jhgj</cidade>
+      <uf>AC</uf>
+      <cep>11.111-111</cep>
+    </enderecoLeitor>
+    <telefones/>
+    <disciplinaMinistrada>hgjgjhg</disciplinaMinistrada>
+  </model.Professor>
+</list>

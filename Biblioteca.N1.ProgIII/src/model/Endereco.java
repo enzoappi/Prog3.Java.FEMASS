@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.InputMismatchException;
+
 /**
  *
  * @author enzoappi
@@ -92,5 +94,11 @@ public class Endereco {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+    
+    public void testaCampos() {
+        if(this.bairro.isEmpty() || this.cep.isEmpty() || this.cidade.isEmpty() || this.logradouro.isEmpty() || this.numero.isEmpty()) {
+            throw new InputMismatchException("Voce precisa preencher todos os campos antes de gravar");
+        }
     }
 }

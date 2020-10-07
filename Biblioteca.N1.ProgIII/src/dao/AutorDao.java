@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +24,7 @@ public class AutorDao {
     private static List<Autor> autores = new ArrayList<>();
     
     public void gravar(Autor autor) {
-        autores.add(autor);
+        this.autores.add(autor);
         salvar();
     }
     
@@ -54,5 +55,12 @@ public class AutorDao {
             getAutores();
         }
         return this.autores;
+    }
+    
+    public void testarArquivoAutores() {
+        getAutores();
+        if(this.autores.isEmpty()) {
+            throw new InputMismatchException("Não há autores cadastrados no Sistema.\nSolicitar o Cadastro ao Bibliotecario, antes de prosseguir.");
+        }
     }
 }

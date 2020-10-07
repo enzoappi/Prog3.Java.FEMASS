@@ -6,6 +6,8 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 
 /**
  *
@@ -13,10 +15,15 @@ import java.time.LocalDate;
  */
 public class ExemplarLivro {
     private String codExemplarLivro;
-    private LocalDate dataAquisicaoExemplarLivro;
+    private String dataAquisicaoExemplarLivro;
 
     public ExemplarLivro(String codExemplarLivro) {
         this.codExemplarLivro = codExemplarLivro;
+    }
+
+    public ExemplarLivro(String codExemplarLivro, String dataAquisicaoExemplarLivro) {
+        this.codExemplarLivro = codExemplarLivro;
+        this.dataAquisicaoExemplarLivro = dataAquisicaoExemplarLivro;
     }
 
     public String getCodExemplarLivro() {
@@ -27,16 +34,23 @@ public class ExemplarLivro {
         this.codExemplarLivro = codExemplarLivro;
     }
 
-    public LocalDate getDataAquisicaoExemplarLivro() {
+    public String getDataAquisicaoExemplarLivro() {
         return dataAquisicaoExemplarLivro;
     }
 
-    public void setDataAquisicaoExemplarLivro(LocalDate dataAquisicaoExemplarLivro) {
+    public void setDataAquisicaoExemplarLivro(String dataAquisicaoExemplarLivro) {
         this.dataAquisicaoExemplarLivro = dataAquisicaoExemplarLivro;
     }
     
     @Override
     public String toString() {
         return codExemplarLivro;
+    }
+    
+    public void testarCampos() {
+        this.dataAquisicaoExemplarLivro = this.dataAquisicaoExemplarLivro.replace("/", "");
+        if(this.codExemplarLivro.isEmpty() || this.dataAquisicaoExemplarLivro.isEmpty() || this.dataAquisicaoExemplarLivro.isBlank()) {
+            throw new InputMismatchException("Você deve preencher todos os campos antes de adicionar um exemplar.");
+        }
     }
 }

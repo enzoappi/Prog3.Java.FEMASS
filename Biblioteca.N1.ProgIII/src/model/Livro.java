@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 /**
@@ -79,5 +80,10 @@ public class Livro {
         return tituloLivro;
     }
     
+    public void testarCampos() {
+        if(this.codLivro.isEmpty() || this.tituloLivro.isEmpty() || this.anoPublicacao.isEmpty()) {
+            throw new InputMismatchException("Você deve preencher todos os campos antes de gravar!");
+        }
+    }
     
  }

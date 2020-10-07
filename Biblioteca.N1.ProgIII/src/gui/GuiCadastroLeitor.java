@@ -6,6 +6,7 @@
 package gui;
 
 import dao.LeitorDao;
+import java.util.InputMismatchException;
 import javax.swing.JOptionPane;
 import model.Aluno;
 import model.Endereco;
@@ -89,7 +90,7 @@ public class GuiCadastroLeitor extends javax.swing.JFrame {
         lstLeitores = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Pessoas");
+        setTitle("Cadastro de Leitor");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -170,6 +171,7 @@ public class GuiCadastroLeitor extends javax.swing.JFrame {
             }
         });
 
+        btnLimparTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/excluir_24px.png"))); // NOI18N
         btnLimparTela.setText("Limpar a tela");
         btnLimparTela.setMaximumSize(new java.awt.Dimension(101, 40));
         btnLimparTela.setMinimumSize(new java.awt.Dimension(101, 40));
@@ -350,7 +352,12 @@ public class GuiCadastroLeitor extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
             professor.setEnderecoLeitor(endereco);
-            new LeitorDao().gravar(professor);
+            try {
+                professor.getEnderecoLeitor().testaCampos();
+                new LeitorDao().gravar(professor);
+            }catch(InputMismatchException ime) {
+                JOptionPane.showMessageDialog(null, ime.getMessage());
+            }
         }
         if(cboTipoLeitor.getSelectedItem()==TipoLeitor.Aluno) {
             Endereco endereco = new Endereco((TipoLogradouro)cboTipoLogradouro.getSelectedItem(), txtLogradouro.getText(), txtNumero.getText(), txtBairro.getText(), txtCidade.getText(), (Uf)cboUf.getSelectedItem(), txtCep.getText());
