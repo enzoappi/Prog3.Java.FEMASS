@@ -1,1 +1,7 @@
-<list/>
+<list>
+  <model.Autor>
+    <codigoAutor>12354687</codigoAutor>
+    <nomeAutor>Laurentino </nomeAutor>
+    <nacionalidadeAutor>brasileiro</nacionalidadeAutor>
+  </model.Autor>
+</list>

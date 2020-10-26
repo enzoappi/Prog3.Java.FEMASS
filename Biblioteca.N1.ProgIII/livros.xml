@@ -1,18 +1,15 @@
 <list>
   <model.Livro>
-    <codLivro>0101</codLivro>
+    <codLivro>444444</codLivro>
     <tituloLivro>1822</tituloLivro>
-    <anoPublicacao>2015</anoPublicacao>
-    <autores/>
-    <exemplaresLivros>
-      <model.ExemplarLivro>
-        <codExemplarLivro>0101</codExemplarLivro>
-        <dataAquisicaoExemplarLivro>  /  /    </dataAquisicaoExemplarLivro>
-      </model.ExemplarLivro>
-      <model.ExemplarLivro>
-        <codExemplarLivro>0202</codExemplarLivro>
-        <dataAquisicaoExemplarLivro>  /  /    </dataAquisicaoExemplarLivro>
-      </model.ExemplarLivro>
-    </exemplaresLivros>
+    <anoPublicacao>2016</anoPublicacao>
+    <autores>
+      <model.Autor>
+        <codigoAutor>12354687</codigoAutor>
+        <nomeAutor>Laurentino </nomeAutor>
+        <nacionalidadeAutor>brasileiro</nacionalidadeAutor>
+      </model.Autor>
+    </autores>
+    <exemplaresLivros/>
   </model.Livro>
 </list>

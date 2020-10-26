@@ -44,6 +44,7 @@ public class AutorDao {
 
     public void excluir(Autor autor) {
         this.autores.remove(autor);
+        salvar();
     }
     
     public List<Autor> getAutores() {

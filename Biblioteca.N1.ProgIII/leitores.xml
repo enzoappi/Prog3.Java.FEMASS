@@ -1,18 +1,45 @@
 <list>
   <model.Professor>
-    <codigoLeitor>010101</codigoLeitor>
-    <nomeLeitor>hjhgbjhgbj</nomeLeitor>
+    <codigoLeitor>12351153</codigoLeitor>
+    <nomeLeitor>Alan</nomeLeitor>
     <enderecoLeitor>
-      <tipoLogradouro>alameda</tipoLogradouro>
-      <logradouro>hgjg</logradouro>
-      <numero>jhgj</numero>
-      <complemento>jhgj</complemento>
-      <bairro>jhg</bairro>
-      <cidade>jhgj</cidade>
-      <uf>AC</uf>
-      <cep>11.111-111</cep>
+      <tipoLogradouro>rua</tipoLogradouro>
+      <logradouro>h</logradouro>
+      <numero>12</numero>
+      <complemento>55555</complemento>
+      <bairro>Centro</bairro>
+      <cidade>Salvador</cidade>
+      <uf>BA</uf>
+      <cep>99.999-999</cep>
+    </enderecoLeitor>
+    <telefones>
+      <model.Telefone>
+        <ddd>55</ddd>
+        <numero>555555</numero>
+        <tipoContato>Pessoal</tipoContato>
+      </model.Telefone>
+      <model.Telefone>
+        <ddd>4444</ddd>
+        <numero>444444444</numero>
+        <tipoContato>Pessoal</tipoContato>
+      </model.Telefone>
+    </telefones>
+    <disciplinaMinistrada>Programacao</disciplinaMinistrada>
+  </model.Professor>
+  <model.Aluno>
+    <codigoLeitor>568683222</codigoLeitor>
+    <nomeLeitor>Enzo</nomeLeitor>
+    <enderecoLeitor>
+      <tipoLogradouro>rua</tipoLogradouro>
+      <logradouro>h</logradouro>
+      <numero>12</numero>
+      <complemento>55555</complemento>
+      <bairro>Centro</bairro>
+      <cidade>Salvador</cidade>
+      <uf>BA</uf>
+      <cep>99.999-999</cep>
     </enderecoLeitor>
     <telefones/>
-    <disciplinaMinistrada>hgjgjhg</disciplinaMinistrada>
-  </model.Professor>
+    <matriculaAluno>182256265</matriculaAluno>
+  </model.Aluno>
 </list>
