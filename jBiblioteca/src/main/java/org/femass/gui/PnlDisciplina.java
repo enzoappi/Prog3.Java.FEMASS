@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.femass.dao.DisciplinaDao;
+import org.femass.model.Curso;
 import org.femass.model.Disciplina;
 
 /**
@@ -20,13 +21,16 @@ public class PnlDisciplina extends javax.swing.JPanel {
     private boolean alterando;
     private Disciplina disciplina;
     /**
-     * Creates new form PnlDisciplina
+     * Creates new form PnlAutor
      */
     public PnlDisciplina() {
         initComponents();
-        
         try {
             lstDisciplinas.setListData(new DisciplinaDao().getDisciplinas().toArray());
+            cboCurso.removeAllItems();
+            for(Curso curso : Curso.values()) {
+                cboCurso.addItem(curso);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(PnlDisciplina.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -45,8 +49,7 @@ public class PnlDisciplina extends javax.swing.JPanel {
         txtId = new javax.swing.JTextField();
         lblNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        lblCurso = new javax.swing.JLabel();
-        txtCurso = new javax.swing.JTextField();
+        lblSobrenome = new javax.swing.JLabel();
         btnGravar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstDisciplinas = new javax.swing.JList();
@@ -54,8 +57,7 @@ public class PnlDisciplina extends javax.swing.JPanel {
         btnAlterar = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-
-        setPreferredSize(new java.awt.Dimension(622, 272));
+        cboCurso = new javax.swing.JComboBox();
 
         lblId.setText("Id");
 
@@ -65,9 +67,7 @@ public class PnlDisciplina extends javax.swing.JPanel {
 
         txtNome.setEditable(false);
 
-        lblCurso.setText("Curso");
-
-        txtCurso.setEditable(false);
+        lblSobrenome.setText("Curso");
 
         btnGravar.setText("Gravar");
         btnGravar.setEnabled(false);
@@ -114,45 +114,48 @@ public class PnlDisciplina extends javax.swing.JPanel {
             }
         });
 
+        cboCurso.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnIncluir)
-                    .addComponent(lblCurso)
                     .addComponent(lblNome)
-                    .addComponent(lblId))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtCurso)
+                    .addComponent(lblId)
+                    .addComponent(lblSobrenome))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(btnIncluir)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnGravar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnCancelar)))
                     .addComponent(txtNome)
+                    .addComponent(cboCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnGravar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(btnApagar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAlterar)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAlterar)
+                        .addGap(14, 14, 14))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblId)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -162,33 +165,34 @@ public class PnlDisciplina extends javax.swing.JPanel {
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCurso)
-                            .addComponent(txtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnGravar)
-                            .addComponent(btnApagar)
-                            .addComponent(btnAlterar)
-                            .addComponent(btnIncluir)
-                            .addComponent(btnCancelar))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                            .addComponent(lblSobrenome)
+                            .addComponent(cboCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGravar)
+                    .addComponent(btnApagar)
+                    .addComponent(btnAlterar)
+                    .addComponent(btnIncluir)
+                    .addComponent(btnCancelar))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         // TODO add your handling code here:
-//        Disciplina disciplina = new Disciplina();
         disciplina.setNome(txtNome.getText());
-        disciplina.setCurso(txtCurso.getText());
+        disciplina.setCurso((Curso) cboCurso.getSelectedItem());
+        
         try {
             if(alterando) {
                 new DisciplinaDao().alterarDisciplina(disciplina);
             } else {
-            new DisciplinaDao().gravarDisciplina(disciplina);
-            txtId.setText(disciplina.getId().toString());
+                new DisciplinaDao().gravarDisciplina(disciplina);
+                txtId.setText(disciplina.getId().toString());
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PnlDisciplina.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         try {
@@ -204,12 +208,12 @@ public class PnlDisciplina extends javax.swing.JPanel {
         Disciplina disciplina = null;
         try {
             disciplina = (Disciplina) lstDisciplinas.getSelectedValue();
+            txtId.setText(disciplina.getId().toString());
+            txtNome.setText(disciplina.getNome());
+            cboCurso.setSelectedItem(disciplina.getCurso());
         } catch (Exception e) {
             return;
         }
-        txtId.setText(disciplina.getId().toString());
-        txtNome.setText(disciplina.getNome());
-        txtCurso.setText(disciplina.getCurso());
     }//GEN-LAST:event_lstDisciplinasValueChanged
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
@@ -226,13 +230,12 @@ public class PnlDisciplina extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(PnlDisciplina.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_btnApagarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
         this.disciplina = (Disciplina) lstDisciplinas.getSelectedValue();
-        this.alterando = true;
+        alterando = true;
         habilitar();
         txtNome.requestFocus();
     }//GEN-LAST:event_btnAlterarActionPerformed
@@ -240,9 +243,9 @@ public class PnlDisciplina extends javax.swing.JPanel {
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         // TODO add your handling code here:
         this.disciplina = new Disciplina();
-        this.alterando = false;
+        alterando = false;
         habilitar();
-        txtCurso.setText("");
+        txtId.setText("");
         txtNome.setText("");
         txtNome.requestFocus();
     }//GEN-LAST:event_btnIncluirActionPerformed
@@ -253,28 +256,27 @@ public class PnlDisciplina extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     public void habilitar() {
-        txtCurso.setEditable(true);
         txtNome.setEditable(true);
+        cboCurso.setEnabled(true);
         btnAlterar.setEnabled(false);
         btnApagar.setEnabled(false);
         btnGravar.setEnabled(true);
         btnCancelar.setEnabled(true);
         btnIncluir.setEnabled(false);
         lstDisciplinas.setEnabled(false);
-        lstDisciplinas.setEnabled(false);
     }
     
     public void desabilitar() {
-        txtCurso.setEditable(false);
         txtNome.setEditable(false);
+        cboCurso.setEnabled(false);
         btnAlterar.setEnabled(true);
         btnApagar.setEnabled(true);
         btnGravar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnIncluir.setEnabled(true);
         lstDisciplinas.setEnabled(true);
-        lstDisciplinas.setEnabled(true);
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
@@ -282,12 +284,12 @@ public class PnlDisciplina extends javax.swing.JPanel {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnIncluir;
+    private javax.swing.JComboBox cboCurso;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCurso;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblSobrenome;
     private javax.swing.JList lstDisciplinas;
-    private javax.swing.JTextField txtCurso;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

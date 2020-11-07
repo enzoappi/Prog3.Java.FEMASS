@@ -12,7 +12,7 @@ package org.femass.model;
 public class Disciplina {
     private Integer id;
     private String nome;
-    private String curso;
+    private Curso curso;
 
     public Integer getId() {
         return id;
@@ -30,11 +30,11 @@ public class Disciplina {
         this.nome = nome;
     }
 
-    public String getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 

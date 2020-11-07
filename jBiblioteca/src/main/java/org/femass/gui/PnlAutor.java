@@ -216,13 +216,13 @@ public class PnlAutor extends javax.swing.JPanel {
         Autor autor = null;
         try {
             autor = (Autor) lstAutores.getSelectedValue();
+            txtId.setText(autor.getId().toString());
+            txtNome.setText(autor.getNome());
+            txtSobrenome.setText(autor.getSobrenome());
+            txtNacionalidade.setText(autor.getNacionalidade());
         } catch (Exception e) {
             return;
         }
-        txtId.setText(autor.getId().toString());
-        txtNome.setText(autor.getNome());
-        txtSobrenome.setText(autor.getSobrenome());
-        txtNacionalidade.setText(autor.getNacionalidade());
     }//GEN-LAST:event_lstAutoresValueChanged
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed

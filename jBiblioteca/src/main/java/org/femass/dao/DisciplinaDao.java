@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.femass.model.Curso;
 import org.femass.model.Disciplina;
 
 /**
@@ -31,7 +32,7 @@ public class DisciplinaDao {
         String sql = "INSERT into disciplina (nome, curso) values (?, ?)";
         PreparedStatement ps = getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, disciplina.getNome());
-        ps.setString(2, disciplina.getCurso());
+        ps.setString(2, disciplina.getCurso().toString());
         
         ps.executeUpdate();
         
@@ -44,7 +45,7 @@ public class DisciplinaDao {
         String sql = "UPDATE disciplina set nome = ?, curso = ? WHERE id = ?";
         PreparedStatement ps = getConexao().prepareStatement(sql);
         ps.setString(1, disciplina.getNome());
-        ps.setString(2, disciplina.getCurso());
+        ps.setString(2, disciplina.getCurso().toString());
         ps.setInt(3, disciplina.getId());
         
         ps.executeUpdate();
@@ -69,7 +70,7 @@ public class DisciplinaDao {
             Disciplina disciplina = new Disciplina();
             disciplina.setId(rs.getInt("id"));
             disciplina.setNome(rs.getString("nome"));
-            disciplina.setCurso(rs.getString("curso"));
+            disciplina.setCurso(Curso.valueOf(rs.getString("curso")));
             disciplinas.add(disciplina);
         }
         return disciplinas;
