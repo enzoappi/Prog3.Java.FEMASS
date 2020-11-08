@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.femass.dao.AutorDao;
+import org.femass.dao.Persistencia;
 import org.femass.model.Autor;
 
 /**
@@ -17,6 +18,7 @@ import org.femass.model.Autor;
  * @author enzoappi
  */
 public class PnlAutor extends javax.swing.JPanel {
+    private Persistencia persistencia = new AutorDao(); //criei para usar a interface
     private boolean alterando;
     private Autor autor;
     /**
@@ -25,7 +27,7 @@ public class PnlAutor extends javax.swing.JPanel {
     public PnlAutor() {
         initComponents();
         try {
-            lstAutores.setListData(new AutorDao().getAutores().toArray());
+            lstAutores.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
             Logger.getLogger(PnlAutor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -194,9 +196,9 @@ public class PnlAutor extends javax.swing.JPanel {
         
         try {
             if(alterando) {
-                new AutorDao().alterar(autor);
+                this.persistencia.alterar(autor);
             } else {
-                new AutorDao().gravar(autor);
+                this.persistencia.gravar(autor);
                 txtId.setText(autor.getId().toString());
             }
         } catch (SQLException ex) {
@@ -204,7 +206,7 @@ public class PnlAutor extends javax.swing.JPanel {
         }
         
         try {
-            lstAutores.setListData(new AutorDao().getAutores().toArray());
+            lstAutores.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
             Logger.getLogger(PnlAutor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -236,13 +238,13 @@ public class PnlAutor extends javax.swing.JPanel {
 //        }
         
         try {
-            new AutorDao().apagar(autor);
+            this.persistencia.apagar(autor);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         try {
-            lstAutores.setListData(new AutorDao().getAutores().toArray());
+            lstAutores.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
             Logger.getLogger(PnlAutor.class.getName()).log(Level.SEVERE, null, ex);
         }

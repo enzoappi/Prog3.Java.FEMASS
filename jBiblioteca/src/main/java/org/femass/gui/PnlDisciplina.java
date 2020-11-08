@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.femass.dao.DisciplinaDao;
+import org.femass.dao.Persistencia;
 import org.femass.model.Curso;
 import org.femass.model.Disciplina;
 
@@ -18,6 +19,7 @@ import org.femass.model.Disciplina;
  * @author enzoappi
  */
 public class PnlDisciplina extends javax.swing.JPanel {
+    private Persistencia persistencia = new DisciplinaDao(); //criei para usar a interface
     private boolean alterando;
     private Disciplina disciplina;
     /**
@@ -26,7 +28,7 @@ public class PnlDisciplina extends javax.swing.JPanel {
     public PnlDisciplina() {
         initComponents();
         try {
-            lstDisciplinas.setListData(new DisciplinaDao().getDisciplinas().toArray());
+            lstDisciplinas.setListData(this.persistencia.getLista().toArray());
             cboCurso.removeAllItems();
             for(Curso curso : Curso.values()) {
                 cboCurso.addItem(curso);
@@ -186,9 +188,9 @@ public class PnlDisciplina extends javax.swing.JPanel {
         
         try {
             if(alterando) {
-                new DisciplinaDao().alterarDisciplina(disciplina);
+                this.persistencia.alterar(disciplina);
             } else {
-                new DisciplinaDao().gravarDisciplina(disciplina);
+                this.persistencia.gravar(disciplina);
                 txtId.setText(disciplina.getId().toString());
             }
         } catch (SQLException ex) {
@@ -196,7 +198,7 @@ public class PnlDisciplina extends javax.swing.JPanel {
         }
         
         try {
-            lstDisciplinas.setListData(new DisciplinaDao().getDisciplinas().toArray());
+            lstDisciplinas.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
             Logger.getLogger(PnlDisciplina.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -220,13 +222,13 @@ public class PnlDisciplina extends javax.swing.JPanel {
         // TODO add your handling code here:
         Disciplina disciplina = (Disciplina) lstDisciplinas.getSelectedValue();
         try {
-            new DisciplinaDao().apagarDisciplina(disciplina);
+            this.persistencia.apagar(disciplina);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         try {
-            lstDisciplinas.setListData(new DisciplinaDao().getDisciplinas().toArray());
+            lstDisciplinas.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
             Logger.getLogger(PnlDisciplina.class.getName()).log(Level.SEVERE, null, ex);
         }

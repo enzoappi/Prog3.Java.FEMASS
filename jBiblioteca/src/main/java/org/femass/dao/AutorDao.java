@@ -5,8 +5,6 @@
  */
 package org.femass.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,19 +17,11 @@ import org.femass.model.Autor;
  *
  * @author enzoappi
  */
-public class AutorDao {
+public class AutorDao extends Dao implements Persistencia{
     
-    public Connection getConexao() throws SQLException {
-        String dataBase = "bdbiblioteca";
-        String ip = "localhost";
-        String usuario = "postgres";
-        String senha = "postgres";
-        String url = "jdbc:postgresql://" + ip + ":5432/" + dataBase; //configuracao da url seguindo os preceitos encontrado no google (url jdbc postgres)
-        Connection con = DriverManager.getConnection(url, usuario, senha);
-        return con;
-    }
-    
-    public void gravar(Autor autor) throws SQLException {
+    @Override
+    public void gravar(Object object) throws SQLException {
+        Autor autor = (Autor) object; //parse de object para Autor afim de que a implementação do metodo se faça.
         String sql = "Insert into autor (nome, sobrenome, nacionalidade) values (?, ?, ?)";
         PreparedStatement ps = getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); //O segundo parametro eh pra que as chaves sejam retornadas ao serem criadas no banco
         ps.setString(1, autor.getNome());
@@ -43,10 +33,11 @@ public class AutorDao {
         ResultSet chaves = ps.getGeneratedKeys(); //pegar as chaves que sao retornadas apos o comando sql cria-las
         chaves.next(); //fazer com que o ponteiro ande na pilha ou lista de retorno.
         autor.setId(chaves.getInt(1));
-        
     }
-    
-    public void alterar(Autor autor) throws SQLException {
+
+    @Override
+    public void alterar(Object object) throws SQLException {
+        Autor autor = (Autor) object; //parse de object para Autor afim de que a implementação do metodo se faça.
         String sql = "update autor set nome = ?, sobrenome = ?, nacionalidade = ? where id = ?";
         PreparedStatement ps = getConexao().prepareStatement(sql);
         ps.setString(1, autor.getNome());
@@ -55,19 +46,20 @@ public class AutorDao {
         ps.setInt(4, autor.getId());
         
         ps.executeUpdate();
-        
     }
-    
-    public void apagar(Autor autor) throws SQLException {
+
+    @Override
+    public void apagar(Object object) throws SQLException {
+        Autor autor = (Autor) object; //parse de object para Autor afim de que a implementação do metodo se faça.
         String sql = "delete from autor where id = ?";
         PreparedStatement ps = getConexao().prepareStatement(sql);
         ps.setInt(1, autor.getId());
         
         ps.executeUpdate();
-        
     }
-    
-    public List<Autor> getAutores() throws SQLException {
+
+    @Override
+    public List<Autor> getLista() throws SQLException {
         String sql = "Select * from autor order by sobrenome"; //constroi-se a query
         PreparedStatement ps = getConexao().prepareStatement(sql); //conecto-me ao banco
         
