@@ -33,6 +33,9 @@ public class GuiPrincipal extends javax.swing.JFrame {
         fileMenu = new javax.swing.JMenu();
         mnuAutor = new javax.swing.JMenuItem();
         mnuDisciplina = new javax.swing.JMenuItem();
+        mnuLeitor = new javax.swing.JMenu();
+        mnuAluno = new javax.swing.JMenuItem();
+        mnuProfessor = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +59,21 @@ public class GuiPrincipal extends javax.swing.JFrame {
             }
         });
         fileMenu.add(mnuDisciplina);
+
+        mnuLeitor.setText("Leitor");
+
+        mnuAluno.setText("Aluno");
+        mnuAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuAlunoActionPerformed(evt);
+            }
+        });
+        mnuLeitor.add(mnuAluno);
+
+        mnuProfessor.setText("Professor");
+        mnuLeitor.add(mnuProfessor);
+
+        fileMenu.add(mnuLeitor);
 
         menuBar.add(fileMenu);
 
@@ -85,11 +103,19 @@ public class GuiPrincipal extends javax.swing.JFrame {
 
     private void mnuDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDisciplinaActionPerformed
         // TODO add your handling code here:
-        GuiDisciplina gD = GuiDisciplina.abrir(); //chama o metodo em GuiAutor que fara o controle de abertura ou nao de janela
+        GuiDisciplina gD = GuiDisciplina.abrir(); //chama o metodo em GuiDisciplina que fara o controle de abertura ou nao de janela
         if(gD == null) return; //testo se a janela esta aberta,e, caso positivo nao faco nada
         desktopPane.add(gD);
         gD.setVisible(true);
     }//GEN-LAST:event_mnuDisciplinaActionPerformed
+
+    private void mnuAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAlunoActionPerformed
+        // TODO add your handling code here:
+        GuiAluno gAl = GuiAluno.abrir(); //chama o metodo em GuiAluno que fara o controle de abertura ou nao de janela
+        if(gAl == null) return; //testo se a janela esta aberta,e, caso positivo nao faco nada
+        desktopPane.add(gAl);
+        gAl.setVisible(true);
+    }//GEN-LAST:event_mnuAlunoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,8 +156,11 @@ public class GuiPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem mnuAluno;
     private javax.swing.JMenuItem mnuAutor;
     private javax.swing.JMenuItem mnuDisciplina;
+    private javax.swing.JMenu mnuLeitor;
+    private javax.swing.JMenuItem mnuProfessor;
     // End of variables declaration//GEN-END:variables
 
 }

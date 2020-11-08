@@ -40,6 +40,7 @@ public class GuiDisciplina extends javax.swing.JInternalFrame {
         pnlDisciplina1 = new org.femass.gui.PnlDisciplina();
 
         setClosable(true);
+        setIconifiable(true);
         setTitle("Cadastro de Disciplina");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {

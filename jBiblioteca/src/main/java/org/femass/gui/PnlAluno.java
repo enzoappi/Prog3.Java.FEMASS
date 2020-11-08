@@ -9,27 +9,27 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.femass.dao.AutorDao;
+import org.femass.dao.AlunoDao;
 import org.femass.dao.Persistencia;
-import org.femass.model.Autor;
+import org.femass.model.Aluno;
 
 /**
  *
  * @author enzoappi
  */
-public class PnlAutor extends javax.swing.JPanel {
-    private Persistencia persistencia = new AutorDao(); //criei para usar a interface
+public class PnlAluno extends javax.swing.JPanel {
+    private Persistencia persistencia = new AlunoDao(); //criei para usar a interface
     private boolean alterando;
-    private Autor autor;
+    private Aluno aluno;
     /**
      * Creates new form PnlAutor
      */
-    public PnlAutor() {
+    public PnlAluno() {
         initComponents();
         try {
-            lstAutores.setListData(this.persistencia.getLista().toArray());
+            lstAlunos.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
-            Logger.getLogger(PnlAutor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PnlAluno.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -47,12 +47,10 @@ public class PnlAutor extends javax.swing.JPanel {
         lblNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         lblSobrenome = new javax.swing.JLabel();
-        txtSobrenome = new javax.swing.JTextField();
-        lblNacionalidade = new javax.swing.JLabel();
-        txtNacionalidade = new javax.swing.JTextField();
+        txtMatricula = new javax.swing.JTextField();
         btnGravar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstAutores = new javax.swing.JList();
+        lstAlunos = new javax.swing.JList();
         btnApagar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
@@ -66,13 +64,9 @@ public class PnlAutor extends javax.swing.JPanel {
 
         txtNome.setEditable(false);
 
-        lblSobrenome.setText("Sobrenome");
+        lblSobrenome.setText("Matricula");
 
-        txtSobrenome.setEditable(false);
-
-        lblNacionalidade.setText("Nacionalidade");
-
-        txtNacionalidade.setEditable(false);
+        txtMatricula.setEditable(false);
 
         btnGravar.setText("Gravar");
         btnGravar.setEnabled(false);
@@ -82,13 +76,13 @@ public class PnlAutor extends javax.swing.JPanel {
             }
         });
 
-        lstAutores.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        lstAutores.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        lstAlunos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        lstAlunos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstAutoresValueChanged(evt);
+                lstAlunosValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(lstAutores);
+        jScrollPane1.setViewportView(lstAlunos);
 
         btnApagar.setText("Apagar");
         btnApagar.addActionListener(new java.awt.event.ActionListener() {
@@ -128,12 +122,10 @@ public class PnlAutor extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNome)
                     .addComponent(lblId)
-                    .addComponent(lblNacionalidade)
                     .addComponent(lblSobrenome))
-                .addGap(18, 18, 18)
+                .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtSobrenome, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNacionalidade, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMatricula, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -159,7 +151,7 @@ public class PnlAutor extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblId)
@@ -171,12 +163,8 @@ public class PnlAutor extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblSobrenome)
-                            .addComponent(txtSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNacionalidade)
-                            .addComponent(txtNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGravar)
@@ -190,74 +178,60 @@ public class PnlAutor extends javax.swing.JPanel {
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         // TODO add your handling code here:
-        autor.setNacionalidade(txtNacionalidade.getText());
-        autor.setNome(txtNome.getText());
-        autor.setSobrenome(txtSobrenome.getText());
+        this.aluno.setNome(txtNome.getText());
+        this.aluno.setMatricula(txtMatricula.getText());
         
         try {
             if(alterando) {
-                this.persistencia.alterar(autor);
+                this.persistencia.alterar(this.aluno);
             } else {
-                this.persistencia.gravar(autor);
-                txtId.setText(autor.getId().toString());
+                this.persistencia.gravar(this.aluno);
+                txtId.setText(this.aluno.getId().toString());
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         try {
-            lstAutores.setListData(this.persistencia.getLista().toArray());
+            lstAlunos.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
-            Logger.getLogger(PnlAutor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PnlAluno.class.getName()).log(Level.SEVERE, null, ex);
         }
         desabilitar();
     }//GEN-LAST:event_btnGravarActionPerformed
 
-    private void lstAutoresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstAutoresValueChanged
+    private void lstAlunosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstAlunosValueChanged
         // TODO add your handling code here:
-        Autor autor = null;
+        Aluno aluno = null;
         try {
-            autor = (Autor) lstAutores.getSelectedValue();
-            txtId.setText(autor.getId().toString());
-            txtNome.setText(autor.getNome());
-            txtSobrenome.setText(autor.getSobrenome());
-            txtNacionalidade.setText(autor.getNacionalidade());
+            aluno = (Aluno) lstAlunos.getSelectedValue();
+            txtId.setText(aluno.getId().toString());
+            txtNome.setText(aluno.getNome());
+            txtMatricula.setText(aluno.getMatricula());
         } catch (Exception e) {
             return;
         }
-    }//GEN-LAST:event_lstAutoresValueChanged
+    }//GEN-LAST:event_lstAlunosValueChanged
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
         // TODO add your handling code here:
-        Autor autor = (Autor) lstAutores.getSelectedValue();
-//        Autor autor = null;
-//        try {
-//            autor = (Autor) lstAutores.getSelectedValue();
-//        } catch (Exception e) {
-//            return;
-//        }
-        
+        Aluno aluno = (Aluno) lstAlunos.getSelectedValue();
         try {
-            this.persistencia.apagar(autor);
+            this.persistencia.apagar(aluno);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         try {
-            lstAutores.setListData(this.persistencia.getLista().toArray());
+            lstAlunos.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
-            Logger.getLogger(PnlAutor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PnlAluno.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnApagarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-        this.autor = (Autor) lstAutores.getSelectedValue();
-//        try {
-//            this.autor = (Autor) lstAutores.getSelectedValue();
-//        } catch (Exception e) {
-//            return;
-//        }
+        this.aluno = (Aluno) lstAlunos.getSelectedValue();
         alterando = true;
         habilitar();
         txtNome.requestFocus();
@@ -265,13 +239,12 @@ public class PnlAutor extends javax.swing.JPanel {
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         // TODO add your handling code here:
-        this.autor = new Autor();
+        this.aluno = new Aluno();
         alterando = false;
         habilitar();
         txtId.setText("");
         txtNome.setText("");
-        txtSobrenome.setText("");
-        txtNacionalidade.setText("");
+        txtMatricula.setText("");
         txtNome.requestFocus();
     }//GEN-LAST:event_btnIncluirActionPerformed
 
@@ -281,27 +254,25 @@ public class PnlAutor extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     public void habilitar() {
-        txtNacionalidade.setEditable(true);
         txtNome.setEditable(true);
-        txtSobrenome.setEditable(true);
+        txtMatricula.setEditable(true);
         btnAlterar.setEnabled(false);
         btnApagar.setEnabled(false);
         btnGravar.setEnabled(true);
         btnCancelar.setEnabled(true);
         btnIncluir.setEnabled(false);
-        lstAutores.setEnabled(false);
+        lstAlunos.setEnabled(false);
     }
     
     public void desabilitar() {
-        txtNacionalidade.setEditable(false);
         txtNome.setEditable(false);
-        txtSobrenome.setEditable(false);
+        txtMatricula.setEditable(false);
         btnAlterar.setEnabled(true);
         btnApagar.setEnabled(true);
         btnGravar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnIncluir.setEnabled(true);
-        lstAutores.setEnabled(true);
+        lstAlunos.setEnabled(true);
     }
 
 
@@ -313,13 +284,11 @@ public class PnlAutor extends javax.swing.JPanel {
     private javax.swing.JButton btnIncluir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblId;
-    private javax.swing.JLabel lblNacionalidade;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblSobrenome;
-    private javax.swing.JList lstAutores;
+    private javax.swing.JList lstAlunos;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtNacionalidade;
+    private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSobrenome;
     // End of variables declaration//GEN-END:variables
 }
