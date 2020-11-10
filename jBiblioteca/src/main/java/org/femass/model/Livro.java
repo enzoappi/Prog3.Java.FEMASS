@@ -5,16 +5,19 @@
  */
 package org.femass.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author enzoappi
  */
-public class Disciplina {
+public class Livro {
     private Integer id;
     private String nome;
-    private Curso curso;
+    private List<Autor> autores;
+    private String editora;
 
     public Integer getId() {
         return id;
@@ -32,12 +35,23 @@ public class Disciplina {
         this.nome = nome;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public List<Autor> getAutores() {
+        return autores;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void adicionarAutores(Autor autor) {
+        if(this.autores == null) {
+            this.autores = new ArrayList();
+        }
+        this.autores.add(autor);
+    }
+
+    public String getEditora() {
+        return editora;
+    }
+
+    public void setEditora(String editora) {
+        this.editora = editora;
     }
 
     @Override
@@ -46,7 +60,7 @@ public class Disciplina {
     }
 
     @Override
-    public boolean equals(Object obj) { //equals eh um metodo feito para que o vinculo dos ponteiros sejam os mesmos para os objetos
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -56,7 +70,7 @@ public class Disciplina {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Disciplina other = (Disciplina) obj;
+        final Livro other = (Livro) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

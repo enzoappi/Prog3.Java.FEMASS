@@ -10,8 +10,19 @@ package org.femass.model;
  * @author enzoappi
  */
 public enum Curso {
-    SI,
-    ADM,
-    MAT,
-    EP;
+    SI("Sistemas de Informação"),
+    ADM("Administração"),
+    MAT("Matemática"),
+    EP("Engenharia de Produção");
+
+    public String nome;
+
+    Curso(String _nome) {
+        this.nome = _nome;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

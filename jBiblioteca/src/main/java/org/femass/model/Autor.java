@@ -5,6 +5,8 @@
  */
 package org.femass.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author enzoappi
@@ -51,4 +53,24 @@ public class Autor {
     public String toString() {
         return this.sobrenome.toUpperCase() + ", " + this.nome;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Autor other = (Autor) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

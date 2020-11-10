@@ -5,6 +5,8 @@
  */
 package org.femass.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author enzoappi
@@ -33,5 +35,25 @@ public class Leitor {
     public String toString() {
         return this.nome;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Leitor other = (Leitor) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }
