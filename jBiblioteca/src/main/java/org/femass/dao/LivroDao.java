@@ -38,11 +38,12 @@ public class LivroDao extends Dao implements Persistencia{
     @Override
     public void alterar(Object object) throws SQLException {
         Livro livro = (Livro) object; //parse de object para Autor afim de que a implementação do metodo se faça.
-        String sql = "UPDATE livro set nome = ?, editora = ? WHERE id = ?";
+        String sql = "UPDATE livro set nome = ?, editora = ?, emprestado = ? WHERE id = ?";
         PreparedStatement ps = getConexao().prepareStatement(sql);
         ps.setString(1, livro.getNome());
         ps.setString(2, livro.getEditora().toString());
-        ps.setInt(3, livro.getId());
+        ps.setBoolean(3, livro.getEmprestado());
+        ps.setInt(4, livro.getId());
         
         ps.executeUpdate();
         
@@ -87,6 +88,89 @@ public class LivroDao extends Dao implements Persistencia{
             livro.setId(rs.getInt("id"));
             livro.setNome(rs.getString("nome"));
             livro.setEditora(rs.getString("editora"));
+            livro.setEmprestado(rs.getBoolean("emprestado"));
+            
+            sql = "Select "
+                    + "id_autor, "
+                    + "autor.nome, "
+                    + "autor.sobrenome, "
+                    + "autor.nacionalidade "
+                    + "from "
+                    + "livroautor inner join autor on livroautor.id_autor = autor.id "
+                    + "where id_livro = ?";
+            
+            PreparedStatement ps2 = getConexao().prepareStatement(sql);
+            ps2.setInt(1, livro.getId()); //IMPORTANTISSIMO SETAR O PARAMETRO
+            ResultSet rsA = ps2.executeQuery();
+            
+            while(rsA.next()) {
+                Autor autor = new Autor();
+                autor.setId(rsA.getInt("id_autor"));
+                autor.setNacionalidade(rsA.getString("nacionalidade"));
+                autor.setNome(rsA.getString("nome"));
+                autor.setSobrenome(rsA.getString("sobrenome"));
+                livro.adicionarAutor(autor);
+            }
+            
+            livros.add(livro);
+        }
+        return livros;
+    }
+    
+    public List<Livro> getListaEmprestado() throws SQLException {
+        String sql = "SELECT * FROM livro WHERE emprestado = true ORDER BY nome";
+        PreparedStatement ps = getConexao().prepareStatement(sql);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        List<Livro> livros = new ArrayList();
+        while(rs.next()) {
+            Livro livro = new Livro();
+            livro.setId(rs.getInt("id"));
+            livro.setNome(rs.getString("nome"));
+            livro.setEditora(rs.getString("editora"));
+            livro.setEmprestado(rs.getBoolean("emprestado"));
+            
+            sql = "Select "
+                    + "id_autor, "
+                    + "autor.nome, "
+                    + "autor.sobrenome, "
+                    + "autor.nacionalidade "
+                    + "from "
+                    + "livroautor inner join autor on livroautor.id_autor = autor.id "
+                    + "where id_livro = ?";
+            
+            PreparedStatement ps2 = getConexao().prepareStatement(sql);
+            ps2.setInt(1, livro.getId()); //IMPORTANTISSIMO SETAR O PARAMETRO
+            ResultSet rsA = ps2.executeQuery();
+            
+            while(rsA.next()) {
+                Autor autor = new Autor();
+                autor.setId(rsA.getInt("id_autor"));
+                autor.setNacionalidade(rsA.getString("nacionalidade"));
+                autor.setNome(rsA.getString("nome"));
+                autor.setSobrenome(rsA.getString("sobrenome"));
+                livro.adicionarAutor(autor);
+            }
+            
+            livros.add(livro);
+        }
+        return livros;
+    }
+    
+    public List<Livro> getListaDisponivel() throws SQLException {
+        String sql = "SELECT * FROM livro WHERE emprestado = false ORDER BY nome";
+        PreparedStatement ps = getConexao().prepareStatement(sql);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        List<Livro> livros = new ArrayList();
+        while(rs.next()) {
+            Livro livro = new Livro();
+            livro.setId(rs.getInt("id"));
+            livro.setNome(rs.getString("nome"));
+            livro.setEditora(rs.getString("editora"));
+            livro.setEmprestado(rs.getBoolean("emprestado"));
             
             sql = "Select "
                     + "id_autor, "

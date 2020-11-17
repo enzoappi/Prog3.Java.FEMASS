@@ -18,6 +18,7 @@ public class Livro {
     private String nome;
     private List<Autor> autores = new ArrayList();
     private String editora;
+    private Boolean emprestado = false;
 
     public Integer getId() {
         return id;
@@ -79,5 +80,13 @@ public class Livro {
             return false;
         }
         return true;
+    }
+
+    public Boolean getEmprestado() {
+        return emprestado;
+    }
+
+    public void setEmprestado(Boolean emprestado) {
+        this.emprestado = emprestado;
     }
 }

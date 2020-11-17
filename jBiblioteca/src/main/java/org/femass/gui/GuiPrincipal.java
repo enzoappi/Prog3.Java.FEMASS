@@ -37,6 +37,9 @@ public class GuiPrincipal extends javax.swing.JFrame {
         mnuAluno = new javax.swing.JMenuItem();
         mnuProfessor = new javax.swing.JMenuItem();
         mnuLivro = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        mnuEmprestar = new javax.swing.JMenuItem();
+        mnuDevolucao = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +93,26 @@ public class GuiPrincipal extends javax.swing.JFrame {
         fileMenu.add(mnuLivro);
 
         menuBar.add(fileMenu);
+
+        jMenu1.setText("Emprestimos");
+
+        mnuEmprestar.setText("Emprestar");
+        mnuEmprestar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEmprestarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuEmprestar);
+
+        mnuDevolucao.setText("Devolucao");
+        mnuDevolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuDevolucaoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuDevolucao);
+
+        menuBar.add(jMenu1);
 
         setJMenuBar(menuBar);
 
@@ -147,6 +170,22 @@ public class GuiPrincipal extends javax.swing.JFrame {
         gL.setVisible(true);
     }//GEN-LAST:event_mnuLivroActionPerformed
 
+    private void mnuEmprestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEmprestarActionPerformed
+        // TODO add your handling code here:
+        GuiEmprestimo gE = GuiEmprestimo.abrir(); //chama o metodo em GuiProfessor que fara o controle de abertura ou nao de janela
+        if(gE == null) return; //testo se a janela esta aberta,e, caso positivo nao faco nada
+        desktopPane.add(gE);
+        gE.setVisible(true);
+    }//GEN-LAST:event_mnuEmprestarActionPerformed
+
+    private void mnuDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDevolucaoActionPerformed
+        // TODO add your handling code here:
+        GuiDevolucao gD = GuiDevolucao.abrir(); //chama o metodo em GuiProfessor que fara o controle de abertura ou nao de janela
+        if(gD == null) return; //testo se a janela esta aberta,e, caso positivo nao faco nada
+        desktopPane.add(gD);
+        gD.setVisible(true);
+    }//GEN-LAST:event_mnuDevolucaoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -185,10 +224,13 @@ public class GuiPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem mnuAluno;
     private javax.swing.JMenuItem mnuAutor;
+    private javax.swing.JMenuItem mnuDevolucao;
     private javax.swing.JMenuItem mnuDisciplina;
+    private javax.swing.JMenuItem mnuEmprestar;
     private javax.swing.JMenu mnuLeitor;
     private javax.swing.JMenuItem mnuLivro;
     private javax.swing.JMenuItem mnuProfessor;
