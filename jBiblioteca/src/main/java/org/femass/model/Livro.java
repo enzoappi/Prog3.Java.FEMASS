@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Livro {
     private Integer id;
     private String nome;
-    private List<Autor> autores;
+    private List<Autor> autores = new ArrayList();
     private String editora;
 
     public Integer getId() {
@@ -39,11 +39,15 @@ public class Livro {
         return autores;
     }
 
-    public void adicionarAutores(Autor autor) {
+    public void adicionarAutor(Autor autor) {
         if(this.autores == null) {
             this.autores = new ArrayList();
         }
         this.autores.add(autor);
+    }
+    
+    public void removerAutor(Autor autor) {
+        this.autores.remove(autor);
     }
 
     public String getEditora() {

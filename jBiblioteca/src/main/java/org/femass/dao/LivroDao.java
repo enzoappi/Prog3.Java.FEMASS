@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.femass.model.Autor;
 import org.femass.model.Livro;
 
 /**
@@ -44,6 +45,23 @@ public class LivroDao extends Dao implements Persistencia{
         ps.setInt(3, livro.getId());
         
         ps.executeUpdate();
+        
+        sql = "delete from livroautor where id_livro = ?"; //apaga todos os autores para garantir que só tenhamos os atuais
+        ps = getConexao().prepareStatement(sql);
+        ps.setInt(1, livro.getId());
+        
+        ps.executeUpdate();
+        
+        for(Autor autor: livro.getAutores()) { //loop para ir inserindo os autores no relaconamento livroautor
+            livro = (Livro) object; //parse de object para Livro afim de que a implementação do metodo se faça.
+            sql = "INSERT INTO livroautor (id_livro, id_autor) values (?, ?) on conflict do nothing"; //consulta com parametro de nao faca nada caso informacoes ambiguas
+            ps = getConexao().prepareStatement(sql);
+            ps.setInt(1, livro.getId());
+            ps.setInt(2, autor.getId());
+
+            ps.executeUpdate();
+        
+        }
     }
 
     @Override
@@ -69,9 +87,31 @@ public class LivroDao extends Dao implements Persistencia{
             livro.setId(rs.getInt("id"));
             livro.setNome(rs.getString("nome"));
             livro.setEditora(rs.getString("editora"));
+            
+            sql = "Select "
+                    + "id_autor, "
+                    + "autor.nome, "
+                    + "autor.sobrenome, "
+                    + "autor.nacionalidade "
+                    + "from "
+                    + "livroautor inner join autor on livroautor.id_autor = autor.id "
+                    + "where id_livro = ?";
+            
+            PreparedStatement ps2 = getConexao().prepareStatement(sql);
+            ps2.setInt(1, livro.getId()); //IMPORTANTISSIMO SETAR O PARAMETRO
+            ResultSet rsA = ps2.executeQuery();
+            
+            while(rsA.next()) {
+                Autor autor = new Autor();
+                autor.setId(rsA.getInt("id_autor"));
+                autor.setNacionalidade(rsA.getString("nacionalidade"));
+                autor.setNome(rsA.getString("nome"));
+                autor.setSobrenome(rsA.getString("sobrenome"));
+                livro.adicionarAutor(autor);
+            }
+            
             livros.add(livro);
         }
         return livros;
     }
-    
 }

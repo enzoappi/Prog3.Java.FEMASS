@@ -55,6 +55,7 @@ public class PnlLivro extends javax.swing.JPanel {
         btnIncluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtEditora = new javax.swing.JTextField();
+        btnAutores = new javax.swing.JButton();
 
         lblId.setText("Id");
 
@@ -113,28 +114,37 @@ public class PnlLivro extends javax.swing.JPanel {
 
         txtEditora.setEditable(false);
 
+        btnAutores.setText("Autores");
+        btnAutores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAutoresActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNome)
                     .addComponent(lblId)
                     .addComponent(lblEditora))
                 .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(btnIncluir)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnGravar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnCancelar)))
-                    .addComponent(txtNome)
-                    .addComponent(txtEditora))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAutores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btnIncluir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGravar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCancelar)))
+                        .addComponent(txtNome)
+                        .addComponent(txtEditora)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -172,7 +182,9 @@ public class PnlLivro extends javax.swing.JPanel {
                     .addComponent(btnAlterar)
                     .addComponent(btnIncluir)
                     .addComponent(btnCancelar))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAutores)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -253,6 +265,12 @@ public class PnlLivro extends javax.swing.JPanel {
         desabilitar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoresActionPerformed
+        // TODO add your handling code here:
+        this.livro = (Livro) lstLivros.getSelectedValue();
+        new GuiAutorLivro(null, true, this.livro).setVisible(true);
+    }//GEN-LAST:event_btnAutoresActionPerformed
+
     public void habilitar() {
         txtNome.setEditable(true);
         txtEditora.setEditable(true); //prestar atencao ao EDITABLE
@@ -260,6 +278,7 @@ public class PnlLivro extends javax.swing.JPanel {
         btnApagar.setEnabled(false);
         btnGravar.setEnabled(true);
         btnCancelar.setEnabled(true);
+        btnAutores.setEnabled(false);
         btnIncluir.setEnabled(false);
         lstLivros.setEnabled(false);
     }
@@ -271,6 +290,7 @@ public class PnlLivro extends javax.swing.JPanel {
         btnApagar.setEnabled(true);
         btnGravar.setEnabled(false);
         btnCancelar.setEnabled(false);
+        btnAutores.setEnabled(true);
         btnIncluir.setEnabled(true);
         lstLivros.setEnabled(true);
     }
@@ -279,6 +299,7 @@ public class PnlLivro extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnApagar;
+    private javax.swing.JButton btnAutores;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnIncluir;

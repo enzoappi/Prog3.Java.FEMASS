@@ -41,6 +41,7 @@ public class GuiAluno extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setTitle("Cadastro de Aluno");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
