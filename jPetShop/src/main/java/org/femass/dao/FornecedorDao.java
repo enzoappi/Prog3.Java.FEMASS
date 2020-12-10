@@ -78,9 +78,9 @@ public class FornecedorDao extends Dao implements Persistencia{
             fornecedor.setEndereco(rs.getString("endereco"));
             fornecedor.setTelefone(rs.getString("telefone"));
             fornecedor.setEmail(rs.getString("email"));
-            fornecedores.add(fornecedor); //adiciono um autor a List
+            fornecedores.add(fornecedor);
         }
-        return fornecedores; //retorno todos os autores gravados na List
+        return fornecedores;
     }
     
 }

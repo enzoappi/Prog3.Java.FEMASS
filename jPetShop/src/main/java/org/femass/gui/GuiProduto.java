@@ -9,23 +9,22 @@ package org.femass.gui;
  *
  * @author enzoappi
  */
-public class GuiAnimal extends javax.swing.JInternalFrame {
+public class GuiProduto extends javax.swing.JInternalFrame {
     private static boolean janelaAberta = false;
     
-    public static GuiAnimal abrir() {
+    public static GuiProduto abrir() {
         if(!janelaAberta) {
-            GuiAnimal gA = new GuiAnimal(); 
+            GuiProduto gP = new GuiProduto(); 
             janelaAberta = true;
-            return gA;
+            return gP;
         } else {
             return null;
         }
     }
-       
     /**
-     * Creates new form GuiAnimal
+     * Creates new form GuiProduto
      */
-    private GuiAnimal() {
+    private GuiProduto() {
         initComponents();
     }
 
@@ -33,11 +32,11 @@ public class GuiAnimal extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlAnimal1 = new org.femass.gui.PnlAnimal();
+        pnlProduto1 = new org.femass.gui.PnlProduto();
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Cadastro de Animais");
+        setTitle("Cadastrar Produto");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -62,14 +61,15 @@ public class GuiAnimal extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlAnimal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlProduto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlAnimal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(pnlProduto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -82,6 +82,6 @@ public class GuiAnimal extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.femass.gui.PnlAnimal pnlAnimal1;
+    private org.femass.gui.PnlProduto pnlProduto1;
     // End of variables declaration//GEN-END:variables
 }

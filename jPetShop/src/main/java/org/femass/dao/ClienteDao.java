@@ -78,9 +78,9 @@ public class ClienteDao extends Dao implements Persistencia{
             cliente.setEndereco(rs.getString("endereco"));
             cliente.setTelefone(rs.getString("telefone"));
             cliente.setEmail(rs.getString("email"));
-            clientes.add(cliente); //adiciono um autor a List
+            clientes.add(cliente);
         }
-        return clientes; //retorno todos os autores gravados na List
+        return clientes;
     }
     
 }

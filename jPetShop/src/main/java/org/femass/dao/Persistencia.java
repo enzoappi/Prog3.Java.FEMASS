@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author enzoappi
  */
-public interface Persistencia { //definimos um contrato (interface)
+public interface Persistencia {
     
     public void gravar(Object object) throws SQLException;
     public void alterar(Object object) throws SQLException;

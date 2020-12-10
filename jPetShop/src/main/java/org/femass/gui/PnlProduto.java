@@ -9,25 +9,27 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.femass.dao.ClienteDao;
+import org.femass.dao.ProdutoDao;
 import org.femass.dao.Persistencia;
-import org.femass.model.Cliente;
+import org.femass.model.Produto;
 
 /**
  *
  * @author enzoappi
  */
-public class PnlCliente extends javax.swing.JPanel {
-    private Persistencia persistencia = new ClienteDao();
+public class PnlProduto extends javax.swing.JPanel {
+    private Persistencia persistencia = new ProdutoDao(); //criei para usar a interface
     private boolean alterando;
-    private Cliente cliente;
+    private Produto produto;
 
-    public PnlCliente() {
+
+
+    public PnlProduto() {
         initComponents();
         try {
-            lstClientes.setListData(this.persistencia.getLista().toArray());
+            lstProdutos.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
-            Logger.getLogger(PnlCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PnlProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -39,21 +41,17 @@ public class PnlCliente extends javax.swing.JPanel {
         txtId = new javax.swing.JTextField();
         lblNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        lblCpf = new javax.swing.JLabel();
-        txtCpf = new javax.swing.JTextField();
-        lblEndereco = new javax.swing.JLabel();
-        txtEndereco = new javax.swing.JTextField();
+        lblPreco = new javax.swing.JLabel();
         btnGravar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstClientes = new javax.swing.JList();
+        lstProdutos = new javax.swing.JList();
         btnApagar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        lblTelefone = new javax.swing.JLabel();
-        txtTelefone = new javax.swing.JTextField();
-        lblEmail = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
+        txtPreco = new javax.swing.JTextField();
+        lblPreco1 = new javax.swing.JLabel();
+        txtQtdeProduto = new javax.swing.JTextField();
 
         lblId.setText("Id");
 
@@ -63,13 +61,7 @@ public class PnlCliente extends javax.swing.JPanel {
 
         txtNome.setEditable(false);
 
-        lblCpf.setText("CPF");
-
-        txtCpf.setEditable(false);
-
-        lblEndereco.setText("Endereco");
-
-        txtEndereco.setEditable(false);
+        lblPreco.setText("Preço");
 
         btnGravar.setText("Gravar");
         btnGravar.setEnabled(false);
@@ -79,13 +71,13 @@ public class PnlCliente extends javax.swing.JPanel {
             }
         });
 
-        lstClientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        lstClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        lstProdutos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        lstProdutos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstClientesValueChanged(evt);
+                lstProdutosValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(lstClientes);
+        jScrollPane1.setViewportView(lstProdutos);
 
         btnApagar.setText("Apagar");
         btnApagar.addActionListener(new java.awt.event.ActionListener() {
@@ -116,83 +108,68 @@ public class PnlCliente extends javax.swing.JPanel {
             }
         });
 
-        lblTelefone.setText("Telefone");
+        txtPreco.setEditable(false);
 
-        txtTelefone.setEditable(false);
+        lblPreco1.setText("Quantidade");
 
-        lblEmail.setText("Email");
-
-        txtEmail.setEditable(false);
+        txtQtdeProduto.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblId)
-                    .addComponent(lblNome)
-                    .addComponent(lblCpf)
-                    .addComponent(lblEndereco)
-                    .addComponent(lblTelefone)
-                    .addComponent(lblEmail))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNome)
+                            .addComponent(lblId)
+                            .addComponent(lblPreco1)
+                            .addComponent(lblPreco))
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNome)
+                            .addComponent(txtPreco)
+                            .addComponent(txtQtdeProduto))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(145, 145, 145)
                         .addComponent(btnIncluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGravar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                        .addComponent(btnApagar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addComponent(btnAlterar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-                            .addComponent(txtEndereco)
-                            .addComponent(txtCpf)
-                            .addComponent(txtNome)
-                            .addComponent(txtEmail))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(btnApagar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAlterar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblId))
+                            .addComponent(lblId)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNome)
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCpf)
-                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPreco))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEndereco)
-                            .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTelefone)
-                            .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEmail)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtQtdeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPreco1))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGravar)
@@ -200,72 +177,67 @@ public class PnlCliente extends javax.swing.JPanel {
                     .addComponent(btnAlterar)
                     .addComponent(btnIncluir)
                     .addComponent(btnCancelar))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         // TODO add your handling code here:
-        cliente.setEndereco(txtEndereco.getText());
-        cliente.setNome(txtNome.getText());
-        cliente.setCpf(txtCpf.getText());
-        cliente.setTelefone(txtTelefone.getText());
-        cliente.setEmail(txtEmail.getText());
+        this.produto.setNome(txtNome.getText());
+        this.produto.setPreco(Double.parseDouble(txtPreco.getText()));
         
         try {
             if(alterando) {
-                this.persistencia.alterar(cliente);
+                this.persistencia.alterar(this.produto);
             } else {
-                this.persistencia.gravar(cliente);
-                txtId.setText(cliente.getId().toString());
+                this.persistencia.gravar(this.produto);
+                txtId.setText(this.produto.getId().toString());
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         try {
-            lstClientes.setListData(this.persistencia.getLista().toArray());
+            lstProdutos.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
-            Logger.getLogger(PnlCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PnlProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
         desabilitar();
     }//GEN-LAST:event_btnGravarActionPerformed
 
-    private void lstClientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstClientesValueChanged
+    private void lstProdutosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstProdutosValueChanged
         // TODO add your handling code here:
-        Cliente cliente = null;
+        Produto produto = null;
         try {
-            cliente = (Cliente) lstClientes.getSelectedValue();
-            txtId.setText(cliente.getId().toString());
-            txtNome.setText(cliente.getNome());
-            txtCpf.setText(cliente.getCpf());
-            txtEndereco.setText(cliente.getEndereco());
-            txtTelefone.setText(cliente.getTelefone());
-            txtEmail.setText(cliente.getEmail());
+            produto = (Produto) lstProdutos.getSelectedValue();
+            txtId.setText(produto.getId().toString());
+            txtNome.setText(produto.getNome());
+            txtPreco.setText(produto.getPreco().toString());
+            txtQtdeProduto.setText(produto.getQdteUnidades().toString());
         } catch (Exception e) {
             return;
         }
-    }//GEN-LAST:event_lstClientesValueChanged
+    }//GEN-LAST:event_lstProdutosValueChanged
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
         // TODO add your handling code here:
-        Cliente cliente = (Cliente) lstClientes.getSelectedValue();
+        Produto produto = (Produto) lstProdutos.getSelectedValue();
         try {
-            this.persistencia.apagar(cliente);
+            this.persistencia.apagar(produto);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         try {
-            lstClientes.setListData(this.persistencia.getLista().toArray());
+            lstProdutos.setListData(this.persistencia.getLista().toArray());
         } catch (SQLException ex) {
-            Logger.getLogger(PnlCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PnlProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnApagarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-        this.cliente = (Cliente) lstClientes.getSelectedValue();
+        this.produto = (Produto) lstProdutos.getSelectedValue();
         alterando = true;
         habilitar();
         txtNome.requestFocus();
@@ -273,15 +245,13 @@ public class PnlCliente extends javax.swing.JPanel {
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         // TODO add your handling code here:
-        this.cliente = new Cliente();
+        this.produto = new Produto();
         alterando = false;
         habilitar();
         txtId.setText("");
         txtNome.setText("");
-        txtCpf.setText("");
-        txtEndereco.setText("");
-        txtTelefone.setText("");
-        txtEmail.setText("");
+        txtPreco.setText("");
+        txtQtdeProduto.setText("");
         txtNome.requestFocus();
     }//GEN-LAST:event_btnIncluirActionPerformed
 
@@ -291,31 +261,27 @@ public class PnlCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     public void habilitar() {
-        txtEndereco.setEditable(true);
         txtNome.setEditable(true);
-        txtCpf.setEditable(true);
-        txtTelefone.setEditable(true);
-        txtEmail.setEditable(true);
+        txtPreco.setEditable(true);
+        txtQtdeProduto.setEditable(false);
         btnAlterar.setEnabled(false);
         btnApagar.setEnabled(false);
         btnGravar.setEnabled(true);
         btnCancelar.setEnabled(true);
         btnIncluir.setEnabled(false);
-        lstClientes.setEnabled(false);
+        lstProdutos.setEnabled(false);
     }
     
     public void desabilitar() {
-        txtEndereco.setEditable(false);
         txtNome.setEditable(false);
-        txtCpf.setEditable(false);
-        txtTelefone.setEditable(false);
-        txtEmail.setEditable(false);
+        txtPreco.setEditable(false);
+        txtQtdeProduto.setEditable(false);
         btnAlterar.setEnabled(true);
         btnApagar.setEnabled(true);
         btnGravar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnIncluir.setEnabled(true);
-        lstClientes.setEnabled(true);
+        lstProdutos.setEnabled(true);
     }
 
 
@@ -326,18 +292,14 @@ public class PnlCliente extends javax.swing.JPanel {
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCpf;
-    private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNome;
-    private javax.swing.JLabel lblTelefone;
-    private javax.swing.JList lstClientes;
-    private javax.swing.JTextField txtCpf;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEndereco;
+    private javax.swing.JLabel lblPreco;
+    private javax.swing.JLabel lblPreco1;
+    private javax.swing.JList lstProdutos;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtTelefone;
+    private javax.swing.JTextField txtPreco;
+    private javax.swing.JTextField txtQtdeProduto;
     // End of variables declaration//GEN-END:variables
 }

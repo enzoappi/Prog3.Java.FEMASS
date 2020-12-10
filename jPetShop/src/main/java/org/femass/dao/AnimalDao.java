@@ -51,6 +51,7 @@ public class AnimalDao extends Dao implements Persistencia{
         ps.setDouble(4, animal.getPeso());
         ps.setString(5, animal.getTipoAnimal().toString());
         ps.setString(6, animal.getPorte());
+        ps.setInt(7, animal.getId());
         
         ps.executeUpdate();
         
@@ -111,7 +112,7 @@ public class AnimalDao extends Dao implements Persistencia{
                     + "animalcliente inner join cliente on animalcliente.id_cliente = cliente.id "
                     + "where id_animal = ?";
             
-            System.out.println(sql);
+//            System.out.println(sql);
             
             PreparedStatement ps2 = getConexao().prepareStatement(sql);
             ps2.setInt(1, animal.getId());
